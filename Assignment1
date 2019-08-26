@@ -1,0 +1,183 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5
+Server version: 5.5.61 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| akshay             |
+| mydb               |
+| mysql              |
+| neha               |
+| performance_schema |
+| practice           |
+| program            |
+| rahul              |
+| sachin             |
+| student            |
+| test               |
+| tp                 |
++--------------------+
+13 rows in set (0.00 sec)
+
+mysql> create database AdventureWorks;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| adventureworks     |
+| akshay             |
+| mydb               |
+| mysql              |
+| neha               |
+| performance_schema |
+| practice           |
+| program            |
+| rahul              |
+| sachin             |
+| student            |
+| test               |
+| tp                 |
++--------------------+
+14 rows in set (0.00 sec)
+
+mysql> use adventureworks;
+Database changed
+mysql> create table ProductCategory;
+ERROR 1113 (42000): A table must have at least 1 column
+mysql> create table productcategory
+    -> (
+    -> productcategoryid int,
+    -> name varchar(20)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into productcategory values (1,'Bikes')
+    -> ;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into productcategory values (2,'Accessories');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into productcategory values (3,'Clothing');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into productcategory values (4,'Components');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into productcategory values (5,'misc');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from ProductCategory;
++-------------------+-------------+
+| productcategoryid | name        |
++-------------------+-------------+
+|                 1 | Bikes       |
+|                 2 | Accessories |
+|                 3 | Clothing    |
+|                 4 | Components  |
+|                 5 | misc        |
++-------------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> update ProductCategory
+    -> set name ='Miscalleneous'
+    -> where productcategoryid=5
+    -> ;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from productcategory
+    -> ;
++-------------------+---------------+
+| productcategoryid | name          |
++-------------------+---------------+
+|                 1 | Bikes         |
+|                 2 | Accessories   |
+|                 3 | Clothing      |
+|                 4 | Components    |
+|                 5 | Miscalleneous |
++-------------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> delete from ProductCategory
+    -> where productCtaegoryid=5
+    -> ;
+ERROR 1054 (42S22): Unknown column 'productCtaegoryid' in 'where clause'
+mysql> delete from ProductCategory
+    -> where ProductCategoryid=5
+    -> ;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from ProductCategory
+    -> ;
++-------------------+-------------+
+| productcategoryid | name        |
++-------------------+-------------+
+|                 1 | Bikes       |
+|                 2 | Accessories |
+|                 3 | Clothing    |
+|                 4 | Components  |
++-------------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> drop table productCategory
+    -> ;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table ProductCategory
+    -> (
+    -> productcategoryid int primary key,
+    -> name varchar(25)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into productcategory values (1,'Bikes')
+    -> ;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into productcategory values (2,'Accessories');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into productcategory values (3,'Clothing');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into productcategory values (4,'Components');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into productcategory values (5,'miscalleneous');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from productcategory;
++-------------------+---------------+
+| productcategoryid | name          |
++-------------------+---------------+
+|                 1 | Bikes         |
+|                 2 | Accessories   |
+|                 3 | Clothing      |
+|                 4 | Components    |
+|                 5 | miscalleneous |
++-------------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> truncate table productcategory ;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from productcategory;
+Empty set (0.00 sec)
+
+mysql>
