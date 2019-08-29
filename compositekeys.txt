@@ -1,0 +1,132 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 4
+Server version: 5.5.61 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| adventure          |
+| aventureworks      |
+| employee           |
+| gaurav             |
+| library            |
+| mydb               |
+| mysql              |
+| orcl               |
+| performance_schema |
+| pranali            |
+| sales              |
+| shrikant           |
+| svd                |
+| tempo              |
+| test               |
+| viat1_db           |
+| vita_db            |
++--------------------+
+18 rows in set (0.00 sec)
+
+mysql> use tempo;
+Database changed
+mysql> show tables;
++-----------------+
+| Tables_in_tempo |
++-----------------+
+| book            |
+| booktranc       |
+| member          |
++-----------------+
+3 rows in set (0.00 sec)
+
+mysql> create table a(x int auto_increment primary key,y int,constraint a_primaryb_pk primary key(b));
+ERROR 1072 (42000): Key column 'b' doesn't exist in table
+mysql> create table (
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(' at line 1
+mysql> create table A(
+    -> x int auto_increment,
+    -> y ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> create table A(
+    -> x int,y int,primary key(x,y);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> create table A(
+    -> x int,y int,primary key(x,y));
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> desc a;
++-------+---------+------+-----+---------+-------+
+| Field | Type    | Null | Key | Default | Extra |
++-------+---------+------+-----+---------+-------+
+| x     | int(11) | NO   | PRI | 0       |       |
+| y     | int(11) | NO   | PRI | 0       |       |
++-------+---------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> create table b(
+    -> x int,y int,constraint b_x_fk foreign key(x,y) references a(x,y);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 2
+mysql> create table b(
+    -> x int,y int,constraint b_x_fk foreign key(x,y) references a(x,y));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> desc b,
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> desc b;
++-------+---------+------+-----+---------+-------+
+| Field | Type    | Null | Key | Default | Extra |
++-------+---------+------+-----+---------+-------+
+| x     | int(11) | YES  | MUL | NULL    |       |
+| y     | int(11) | YES  |     | NULL    |       |
++-------+---------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> insert into a values(1,1),(1,2),(1,1);
+ERROR 1062 (23000): Duplicate entry '1-1' for key 'PRIMARY'
+mysql> insert into a values(1,1),(1,2);
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into b values(1,1),(1,2),(2,1);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`tempo`.`b`, CONSTRAINT `b_x_fk` FOREIGN KEY (`x`, `y`) REFERENCES `a` (`x`, `y`))
+mysql> insert into b values(1,1),(1,2),(1,1);
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> delete from a where y=2;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`tempo`.`b`, CONSTRAINT `b_x_fk` FOREIGN KEY (`x`, `y`) REFERENCES `a` (`x`, `y`))
+mysql> delete from b where y=2;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from b;
++------+------+
+| x    | y    |
++------+------+
+|    1 |    1 |
+|    1 |    1 |
++------+------+
+2 rows in set (0.00 sec)
+
+mysql> delete from a where y=2;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from a;
++---+---+
+| x | y |
++---+---+
+| 1 | 1 |
++---+---+
+1 row in set (0.00 sec)
+
+mysql>
