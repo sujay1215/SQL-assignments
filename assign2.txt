@@ -1,0 +1,290 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 12
+Server version: 5.5.61 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| adventure          |
+| aventureworks      |
+| employee           |
+| gaurav             |
+| mydb               |
+| mysql              |
+| orcl               |
+| performance_schema |
+| pranali            |
+| sales              |
+| shrikant           |
+| svd                |
+| test               |
+| viat1_db           |
+| vita_db            |
++--------------------+
+16 rows in set (0.00 sec)
+
+mysql> use aventureworks;
+Database changed
+mysql> show tables;
++-------------------------+
+| Tables_in_aventureworks |
++-------------------------+
+| productcategory         |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from productcategory;
++-------------------+-------------+
+| ProductCategoryID | Name        |
++-------------------+-------------+
+|                 1 | Bikes       |
+|                 2 | Accessories |
+|                 1 | PRANALI     |
+|                 3 | Clothing    |
+|                 4 | components  |
++-------------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table productcategory rename to ProductCategory;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from productcategory;
++-------------------+-------------+
+| ProductCategoryID | Name        |
++-------------------+-------------+
+|                 1 | Bikes       |
+|                 2 | Accessories |
+|                 1 | PRANALI     |
+|                 3 | Clothing    |
+|                 4 | components  |
++-------------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_aventureworks |
++-------------------------+
+| productcategory         |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table productcategory rename to ProductDetails;
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_aventureworks |
++-------------------------+
+| productdetails          |
++-------------------------+
+1 row in set (0.00 sec)
+
+
+
+------------------------------------------TEXT DATA TYPE---------------------------
+
+mysql> insert into TextDataType values('3','456','dcfjvhfvbf cgefvcbd cvc cdcdfvgfc ')     
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from textdatatype;
++------+------+------------------------------------+
+| a    | b    | c                                  |
++------+------+------------------------------------+
+| 3    | 456  | dcfjvhfvbf cgefvcbd cvc cdcdfvgfc  |
++------+------+------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> insert into TextDataType values('45','456','dcfjvhfvbf cgefvcbd cvc cdcdfvgfc ');
+ERROR 1406 (22001): Data too long for column 'a' at row 1
+mysql> insert into TextDataType values('1','45656','dcfjvhfvbf cgefvcbd cvc cdcdfvgfc ');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from textdatatype;
++------+-------+------------------------------------+
+| a    | b     | c                                  |
++------+-------+------------------------------------+
+| 3    | 456   | dcfjvhfvbf cgefvcbd cvc cdcdfvgfc  |
+| 1    | 45656 | dcfjvhfvbf cgefvcbd cvc cdcdfvgfc  |
++------+-------+------------------------------------+
+2 rows in set (0.00 sec)
+
+------------------------------------------SORTING :ORDER BY CLAUSE---------------------------
+
+mysql> create table Employees(Id int,Name varchar(20),City varchar(20),Age int,Salary float,Department varchar(20));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> alter table Employees add primary key(Id);
+Query OK, 0 rows affected (0.15 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> Describe Employees;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| Id         | int(11)     | NO   | PRI | 0       |       |
+| Name       | varchar(20) | YES  |     | NULL    |       |
+| City       | varchar(20) | YES  |     | NULL    |       |
+| Age        | int(11)     | YES  |     | NULL    |       |
+| Salary     | float       | YES  |     | NULL    |       |
+| Department | varchar(20) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> insert into Employees(id,name,city,age,salary,department) values(101,'Raj','Pune',37,45000,'IT'),(102,'Simran','Kashmir',27,75000,'Modelling'),(103,'Amrish','Kashmir',60,90000,'Politics');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from Employees;
++-----+--------+---------+------+--------+------------+
+| Id  | Name   | City    | Age  | Salary | Department |
++-----+--------+---------+------+--------+------------+
+| 101 | Raj    | Pune    |   37 |  45000 | IT         |
+| 102 | Simran | Kashmir |   27 |  75000 | Modelling  |
+| 103 | Amrish | Kashmir |   60 |  90000 | Politics   |
++-----+--------+---------+------+--------+------------+
+3 rows in set (0.01 sec)
+
+mysql> select * from Employees order by age desc;
++-----+--------+---------+------+--------+------------+
+| Id  | Name   | City    | Age  | Salary | Department |
++-----+--------+---------+------+--------+------------+
+| 103 | Amrish | Kashmir |   60 |  90000 | Politics   |
+| 101 | Raj    | Pune    |   37 |  45000 | IT         |
+| 102 | Simran | Kashmir |   27 |  75000 | Modelling  |
++-----+--------+---------+------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Employees order by name ;
++-----+--------+---------+------+--------+------------+
+| Id  | Name   | City    | Age  | Salary | Department |
++-----+--------+---------+------+--------+------------+
+| 103 | Amrish | Kashmir |   60 |  90000 | Politics   |
+| 101 | Raj    | Pune    |   37 |  45000 | IT         |
+| 102 | Simran | Kashmir |   27 |  75000 | Modelling  |
++-----+--------+---------+------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Employees order by name   limit 2 ;
++-----+--------+---------+------+--------+------------+
+| Id  | Name   | City    | Age  | Salary | Department |
++-----+--------+---------+------+--------+------------+
+| 103 | Amrish | Kashmir |   60 |  90000 | Politics   |
+| 101 | Raj    | Pune    |   37 |  45000 | IT         |
++-----+--------+---------+------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into Employees(id,name,city,age,salary,department) values(104,'Rani','Thane',57,45000,'IT'),(105,'Sai','Kanpur',29,70000,'Modelling'),(106,'Amar','Mumbai',45,9000,'Politics');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from Employees;
++-----+--------+---------+------+--------+------------+
+| Id  | Name   | City    | Age  | Salary | Department |
++-----+--------+---------+------+--------+------------+
+| 101 | Raj    | Pune    |   37 |  45000 | IT         |
+| 102 | Simran | Kashmir |   27 |  75000 | Modelling  |
+| 103 | Amrish | Kashmir |   60 |  90000 | Politics   |
+| 104 | Rani   | Thane   |   57 |  45000 | IT         |
+| 105 | Sai    | Kanpur  |   29 |  70000 | Modelling  |
+| 106 | Amar   | Mumbai  |   45 |   9000 | Politics   |
++-----+--------+---------+------+--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from Employees order by name limit 3,5 ;
++-----+--------+---------+------+--------+------------+
+| Id  | Name   | City    | Age  | Salary | Department |
++-----+--------+---------+------+--------+------------+
+| 104 | Rani   | Thane   |   57 |  45000 | IT         |
+| 105 | Sai    | Kanpur  |   29 |  70000 | Modelling  |
+| 102 | Simran | Kashmir |   27 |  75000 | Modelling  |
++-----+--------+---------+------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from Employees order by name limit 2,5 ;
++-----+--------+---------+------+--------+------------+
+| Id  | Name   | City    | Age  | Salary | Department |
++-----+--------+---------+------+--------+------------+
+| 101 | Raj    | Pune    |   37 |  45000 | IT         |
+| 104 | Rani   | Thane   |   57 |  45000 | IT         |
+| 105 | Sai    | Kanpur  |   29 |  70000 | Modelling  |
+| 102 | Simran | Kashmir |   27 |  75000 | Modelling  |
++-----+--------+---------+------+--------+------------+
+4 rows in set (0.00 sec)
+
+------------------------------------------NUMERIC DATA TYPE---------------------------
+mysql> create table numdatatype(a tinyint,b smallint, c mediumint,d int, e bigint, f decimal(8,2),g double(8,2),h float);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into numdatatype values(110,234,3345,33345,3333345,999999.9,999999.99,999999.99);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into numdatatype values(110,234,3345,33345,3333345,999999.9,96999.99,999999.59);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from numdatatype ;
++------+------+------+-------+---------+-----------+-----------+---------+
+| a    | b    | c    | d     | e       | f         | g         | h       |
++------+------+------+-------+---------+-----------+-----------+---------+
+|  110 |  234 | 3345 | 33345 | 3333345 | 999999.90 | 999999.99 | 1000000 |
+|  110 |  234 | 3345 | 33345 | 3333345 | 999999.90 |  96999.99 | 1000000 |
++------+------+------+-------+---------+-----------+-----------+---------+
+2 rows in set (0.00 sec)
+
+------------------------------------------DATE DATA TYPE---------------------------
+
+mysql> create table datedatatype(a date,b datetime, c timestamp,d time);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into datedatatype values(Current_date(),now(),now(),now());
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into datedatatype values('2019-08-05','2018-08-05 10:30:33','20190805103033','10:30:33');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> seect * from datedatatype;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'seect * from datedatatype' at line 1
+mysql> select * from datedatatype;
++------------+---------------------+---------------------+----------+
+| a          | b                   | c                   | d        |
++------------+---------------------+---------------------+----------+
+| 2019-08-26 | 2019-08-26 19:45:10 | 2019-08-26 19:45:10 | 19:45:10 |
+| 2019-08-05 | 2018-08-05 10:30:33 | 2019-08-05 10:30:33 | 10:30:33 |
++------------+---------------------+---------------------+----------+
+2 rows in set (0.00 sec)
+------------------------------------------SPECIAL DATA TYPE---------------------------
+
+mysql> create table specialtype(id int AUTO_INCREMENT primary key,membership ENUM('Gold','Silver','Platinum'),Hobbies SET('swimming','dancing','sports','singing'));
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> INSERT INTO SPECIALTYPE VALUES(701,'GOLD','SINGING','DANCING');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO SPECIALTYPE VALUES(701,'GOLD',('SINGING','DANCING'));
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> INSERT INTO SPECIALTYPE VALUES('GOLD',('SINGING','DANCING'));
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> INSERT INTO SPECIALTYPE(ID,MEMBERSHIP,HOBBIES) VALUES(701,'GOLD',('SINGING','DANCING'));
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> INSERT INTO SPECIALTYPE(ID,MEMBERSHIP,HOBBIES) VALUES(701,'GOLD','SINGING,DANCING');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from specialtype;
++-----+------------+-----------------+
+| id  | membership | Hobbies         |
++-----+------------+-----------------+
+| 701 | Gold       | dancing,singing |
++-----+------------+-----------------+
+1 row in set (0.00 sec)
+
+mysql>
