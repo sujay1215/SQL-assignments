@@ -1,0 +1,166 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.5.61 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use aventureworkd;
+ERROR 1049 (42000): Unknown database 'aventureworkd'
+mysql> create database tempo;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use tempo;
+Database changed
+mysql> create table member(
+    ->  memID int auto_increment primary key,
+    ->  fname varchar(20) not null,
+    ->  mname varchar(20),
+    -> lname varchar(20) not null,
+    -> mem_DOj date,email varchar(30) unique,
+    -> phone char(10),member_type enum ('regular','silver','gold','platinum')
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table book (
+    -> book_id int auto_increment primary key ,
+    -> bname varchar(50) not null,
+    -> price decimal (6,2),
+    -> fname varchar(20)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> create table booktranc(
+    -> trid int auto_increment primary key ,
+    -> trdate datetime,
+    -> bookid int, constraint booktranc_bookid_fk foreign key(bookid) references book(book_id),
+    -> mid int,constraint booktranc_mid_fk foreign key(mId) references member(memId)
+    -> );
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> alter table book
+    -> drop fname;
+Query OK, 0 rows affected (0.15 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table book add author varchar(30) not null;
+Query OK, 0 rows affected (0.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc book;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| book_id | int(11)      | NO   | PRI | NULL    | auto_increment |
+| bname   | varchar(50)  | NO   |     | NULL    |                |
+| price   | decimal(6,2) | YES  |     | NULL    |                |
+| author  | varchar(30)  | NO   |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> insert into member(fname,mname,lname,mem_DOj, email,phone,member_type)
+    -> values
+    -> ('tom','dic','harry',now(),'tomdic@harry.com',6598745872,'Gold'),
+    -> ('ashely',null,'tisdale',now(),'tomdic@gamil.com',6598745772,'Platinum'),
+    -> ('hillary','duff','hari',now(),NULL,7598745476,'Silver'),
+    -> ('tomi','don','herry',now(),NULL,6598745682,'Gold')
+    -> ;
+Query OK, 4 rows affected, 4 warnings (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 4
+
+mysql> insert into member(fname,mname,lname,mem_DOj, email,phone,member_type)
+    -> values
+    -> ('tom','dic','harry',now(),'tomdic@harry.com',6598745872,'Gold'),
+    -> ('ashely',null,'tisdale',now(),'tomdic@gamil.com',6598745772,'Platinum'),
+    -> ('hillary','duff','hari',now(),NULL,7598745476,'Silver'),
+    -> ('tomi','don','herry',now(),NULL,6598745682,'Gold')
+    -> ;
+ERROR 1062 (23000): Duplicate entry 'tomdic@harry.com' for key 'email'
+mysql> ;insert into member(fname,mname,lname,mem_DOj, email,phone,member_type)
+ERROR:
+No query specified
+
+    -> values
+    -> ('tom','dic','harry',now(),'tomdic@harry.com',6598745872,'Gold'),
+    -> ('ashely',null,'tisdale',now(),'todic@gamil.com',6598745772,'Platinum'),
+    -> ('hillary','duff','hari',now(),NULL,7598745476,'Silver'),
+    -> ('tomi','don','herry',now(),NULL,6598745682,'Gold')
+    -> ;
+ERROR 1062 (23000): Duplicate entry 'tomdic@harry.com' for key 'email'
+mysql> insert into member(fname,mname,lname,mem_DOj, email,phone,member_type)
+    -> values
+    -> ('tom','dic','harry',now(),'tomdic@harry.com',6598745872,'Gold'),
+    -> ('ashely',null,'tisdale',now(),'todic@gamil.com',6598745772,'Platinum'),
+    -> ('hillary','duff','hari',now(),NULL,7598745476,'Silver'),
+    -> ('tomi','don','herry',now(),NULL,6598745682,'Gold')
+    -> ;
+ERROR 1062 (23000): Duplicate entry 'tomdic@harry.com' for key 'email'
+mysql> select * from member ;
++-------+---------+-------+---------+------------+------------------+------------+-------------+
+| memID | fname   | mname | lname   | mem_DOj    | email            | phone      | member_type |
++-------+---------+-------+---------+------------+------------------+------------+-------------+
+|     1 | tom     | dic   | harry   | 2019-08-27 | tomdic@harry.com | 6598745872 | gold        |
+|     2 | ashely  | NULL  | tisdale | 2019-08-27 | tomdic@gamil.com | 6598745772 | platinum    |
+|     3 | hillary | duff  | hari    | 2019-08-27 | NULL             | 7598745476 | silver      |
+|     4 | tomi    | don   | herry   | 2019-08-27 | NULL             | 6598745682 | gold        |
++-------+---------+-------+---------+------------+------------------+------------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into booktranc(trdate,bookid,mid)
+    -> values(now(),1,2),(now(),2,4);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`tempo`.`booktranc`, CONSTRAINT `booktranc_bookid_fk` FOREIGN KEY (`bookid`) REFERENCES `book` (`book_id`))
+mysql> ('tomi','don','herry',now(),NULL,6598745682,'Gold')
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''tomi','don','herry',now(),NULL,6598745682,'Gold')' at line 1
+mysql> insert into book values(NULL,'My Sql',450,'Sanjay');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into book values(NULL,'My SQl2',650,'Ajay');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from book;
++---------+---------+--------+--------+
+| book_id | bname   | price  | author |
++---------+---------+--------+--------+
+|       1 | My Sql  | 450.00 | Sanjay |
+|       2 | My SQl2 | 650.00 | Ajay   |
++---------+---------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> insert into booktranc(trdate,bookid,mid)
+    -> values(now(),1,2),(now(),2,4);
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> desc booktranc;
++--------+----------+------+-----+---------+----------------+
+| Field  | Type     | Null | Key | Default | Extra          |
++--------+----------+------+-----+---------+----------------+
+| trid   | int(11)  | NO   | PRI | NULL    | auto_increment |
+| trdate | datetime | YES  |     | NULL    |                |
+| bookid | int(11)  | YES  | MUL | NULL    |                |
+| mid    | int(11)  | YES  | MUL | NULL    |                |
++--------+----------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> select * from booktranc;
++------+---------------------+--------+------+
+| trid | trdate              | bookid | mid  |
++------+---------------------+--------+------+
+|    3 | 2019-08-27 18:39:57 |      1 |    2 |
+|    4 | 2019-08-27 18:39:57 |      2 |    4 |
++------+---------------------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> delete from book where book_id=2
+    -> ;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`tempo`.`booktranc`, CONSTRAINT `booktranc_bookid_fk` FOREIGN KEY (`bookid`) REFERENCES `book` (`book_id`))
+mysql>
